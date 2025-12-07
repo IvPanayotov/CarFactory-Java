@@ -1,7 +1,10 @@
 package com.CarFactory.service;
 
+import java.util.List;
+
 import com.CarFactory.domain.Car;
 import com.CarFactory.repo.CarRepository;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,14 +19,10 @@ public class CarService {
         this.repo = repo;
     }
 
-    public Iterable<Car> list() { return repo.findAll(); }
 
-    public Iterable<Car> findByBrand(String brand) {
+    public List<Car> findByBrand(String brand) {
     return repo.findByBrandIgnoreCase(brand);
     }
-
-
-    public Optional<Car> find(long id) { return repo.findById(id); }
 
     public Car create(Car car) {
         return repo.save(car);
@@ -46,11 +45,4 @@ public class CarService {
         }
         return false;
     }
-
-    public Optional<Car> updatePrice(long id, double newPrice) {
-      return repo.findById(id).map(car -> {
-        car.setPrice(newPrice);
-        return repo.save(car);
-    });
-  }
 }
